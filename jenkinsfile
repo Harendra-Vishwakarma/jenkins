@@ -1,0 +1,47 @@
+pipeline{
+    agent any
+    tools {
+        maven 'MAVEN_HOME' 
+    }
+    stages{
+        stage("Test"){
+            steps{
+                //mvn test
+                bat 'mvn test'
+                echo "========executing A========"
+            }
+            
+        }
+    
+
+        stage("Build"){
+            steps{
+                //mvn clean package
+                bat 'mvn clean package'
+                echo "========executing A========"
+            }
+            
+        }
+
+        stage("Deploy on test"){
+            steps{
+                //deploy on container-> plugin
+                deploy adapters: [tomcat9(credentialsId: 'ea29f566-d8ad-4cde-a22d-c1ae26e39c52', path: '', url: 'http://localhost:8085')], contextPath: null, war: '**/*.war'
+                echo "========executing A========"
+            }
+            
+        }
+    }
+    
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
