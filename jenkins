@@ -25,13 +25,13 @@ pipeline{
     }
     post{
         always{
-            echo "========always========"
+           emailext body: 'Campus credo build deployed ', subject: 'Campuscredo build', to: 'harendra.iiti@gmail.com'
         }
         success{
-            echo "========pipeline executed successfully ========"
+           emailext body: 'Campus credo build success ', subject: 'Campuscredo build', to: 'harendra.iiti@gmail.com'
         }
         failure{
-            echo "========pipeline execution failed========"
+            emailext body: 'Campus credo build faild ', subject: 'Campuscredo build', to: 'harendra.iiti@gmail.com'
         }
     }
 }
